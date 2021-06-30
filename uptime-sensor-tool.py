@@ -7,7 +7,8 @@
 ######################################
 #
 # purpose:
-# Monitor events taking place throughout the day. Write an uptime sensor tool that checks systems are responding. Useful for tracking the status of critical infrastructure, such as web servers
+# Monitor events taking place throughout the day. Write an uptime sensor tool that checks systems are responding.
+# Useful for tracking the status of critical infrastructure, such as web servers
 #
 ######################################
 #
@@ -20,24 +21,43 @@
 #######################################
 #
 # Import Library:
-from pythonping import ping
+from pythonping import ping  # Used pythonping library to import ping
 import datetime
 #
 #
-################################
+#######################################
 #
 # Variables:
 #
 ip_addr = input("Enter the desired Ip address for ping:")
+# ping function with ip variable target and other parameters added
 ping_test = ping(ip_addr, timeout=2, verbose=True)
-now = datetime.datetime.now()
+now = datetime.datetime.now()   # current date and time function saved to variable
+#
+#
+#######################################
+#
+# Functions:
+#
 
 
 def ping_state():
-    if ping_test == 0:
+    if ping_test == 0:  # if/else statement to evaluate success/failure of ping state
+        # print function with ping variable and amended property
         print(ping_test.packet_loss, now, "Network is Down:", ip_addr)
     else:
+        # print function with ping variable and amended property
         print(ping_test.success, now, "Network is Up:", ip_addr)
 
 
+#
+#
+#######################################
+#
+#
+# Main
+#
 ping_state()
+#
+#
+# End
