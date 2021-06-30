@@ -15,8 +15,8 @@
 # Requirements:
 # [+] Transmit a single ICMP packet to a specifc IP every two seconds
 # [+] Evaluate the response as either success or failure
-# [] Assign success or failure to a status variable
-# [] For every ICMP tansmission attempted, print the status variable along with a comprehensive timestamp and destination IP tested: EX. 2020-10-05 17:45:45:510261 Network Active to 8.8.8.8
+# [+] Assign success or failure to a status variable
+# [+] For every ICMP tansmission attempted, print the status variable along with a comprehensive timestamp and destination IP tested: EX. 2020-10-05 17:45:45:510261 Network Active to 8.8.8.8
 #
 #######################################
 #
