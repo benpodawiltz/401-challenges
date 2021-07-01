@@ -21,8 +21,11 @@
 #######################################
 #
 # Import Library:
-from pythonping import ping  # Used pythonping library to import ping
+from typing import NoReturn
+from pythonping import network, ping  # Used pythonping library to import ping
 import datetime
+
+from pythonping.executor import SuccessOn
 #
 #
 #######################################
@@ -32,7 +35,8 @@ import datetime
 ip_addr = input("Enter the desired Ip address for ping:")
 # ping function with ip variable target and other parameters added
 ping_test = ping(ip_addr, timeout=2, verbose=True)
-now = datetime.datetime.now()   # current date and time function saved to variable
+# current date and time function saved to variable
+time_now = datetime.datetime.now()
 #
 #
 #######################################
@@ -42,12 +46,14 @@ now = datetime.datetime.now()   # current date and time function saved to variab
 
 
 def ping_state():
-    if ping_test == 0:  # if/else statement to evaluate success/failure of ping state
-        # print function with ping variable and amended property
-        print(ping_test.packet_loss, now, "Network is Down:", ip_addr)
+
+    if ping_test.success(SuccessOn.One) == False:
+        print(ping_test.success(SuccessOn.One),
+              time_now, "Network is Down:", ip_addr)
+
     else:
-        # print function with ping variable and amended property
-        print(ping_test.success, now, "Network is Up:", ip_addr)
+        print(ping_test.success(SuccessOn.One),
+              time_now, "Network is Up:", ip_addr)
 
 
 #
