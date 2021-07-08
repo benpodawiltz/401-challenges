@@ -2,7 +2,7 @@
 #
 # script name:  Uptime Sensor tool 1/2
 # author:       ben_podawiltz
-# revision:     6.30.21
+# revision:     7.7.21
 #
 ######################################
 #
@@ -22,7 +22,7 @@
 # Requirements:
 # [+] Send an email to an administrator if host changes 'up' to 'down'
 # [+] Send an email to an administrator if host changes 'down' to 'up'
-# [+] Email message should clearly indicate host status change, status before & after, timestamp
+# [] Email message should clearly indicate host status change, status before & after, timestamp
 #
 ####################################
 #
@@ -46,7 +46,8 @@ ip_addr = input("Enter the desired Ip address for ping:")
 ping_test = ping(ip_addr, timeout=2, verbose=True)
 # current date and time function saved to variable
 time_now = datetime.datetime.now()
-#
+ping_text = open("ping_state.txt", "w")
+
 #######################################
 #
 # Functions:
@@ -58,37 +59,59 @@ def ping_state():
     # set the boolean value of the output of ping_test variable to false
     if ping_test.success(SuccessOn.One) == False:
         print(ping_test.success(SuccessOn.One),  # print(function)ping_test (variable).success (method)(SuccessOn(class).One (variable))
-              time_now, "Network is Down:", ip_addr)
+              time_now, "Network is Down:", ip_addr, file=ping_text)
 
     else:
         print(ping_test.success(SuccessOn.One),
-              time_now, "Network is Up:", ip_addr)
+              time_now, "Network is Up:", ip_addr, file=ping_text)
 
-
-ping_state()
 
 print("")
+ping_state()
+
 ####################################################
 #
 # Send ping state to an administrator's email address
 #
-port = 465  # For SSL
-smtp_server = "smtp.gmail.com"
-emailAccount = input("Please enter sender's email address:")
-emailPassword = input("Please enter password for email:")
-# Enter receiver address
-receiver_email = input("Please enter receiver's email address:")
-message = input(
-    "Body of message needs to include: 1. Ip Address 2. Network status [Up/Down] 3. Status before and after alert:")
-print("")
-context = ssl.create_default_context()
-with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-    server.login(emailAccount, emailPassword)
-    server.sendmail(emailAccount, receiver_email, message)
 
-#######################################
+
+admin_email = input("Please enter administrator email address:")
+sent_from = "colin@gmail.com"
+gmail_pass = input("Please enter password:")
+to = admin_email
+body = ("Attached is a document indicating a server is up or down and the network address" +
+        input("Please enter additional network status event information for admistrator:"))
+subject = "Network status notification"
+email_text = """\
+    From: %s
+    To: %s
+    Subject : %s
+
+    %s
+    """ % (sent_from, ",".join(to), subject, body)
+
+
+try:
+    server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+    server.ehlo()
+    server.login(admin_email, gmail_pass)
+    server.sendmail(sent_from, to, email_text)
+
+    print("Email sent")
+
+except:
+    print("Connection not established")
+
+
 #
+########################################
+
+########################################
 #
-#
+# Comment:  Still working on this one. I have a workable email template but I don't care for how the string in the server.sendmail is diplayed in the GUI email inbox. This script still needs
+# 1. the ping_state.txt attached
+# 2. Some logic to determine the Network up/down state to be sent in the body of the email
+# 3. Date/time stamp attached to attachment
+# 4. The text file doesn't display results till after the email has sent despite the function being called prior to email
 #
 # End
