@@ -43,18 +43,17 @@ def main_menu():
         "Welcome to the encryption script please select method above:")
 
     if user_input == "1":
-        e_datapath
+        e_datapath()
     elif user_input == "2":
-        d_datapath
+        d_datapath()
     elif user_input == "3":
-        e_message
+        e_message()
     elif user_input == "4":
-        d_mesage
+        d_message()
     else:
         print("Error, make another selection")
 
 
-main_menu()
 #######################################
 #
 # write and load key functions for encryption processes:
@@ -82,15 +81,12 @@ def e_datapath():
 
     with open(e_path, "rb") as e_file:
         myfiledata = e_file.read()
-        encrypted_data = fclass.encrypt(myfiledata)
+    encrypted_data = fclass.encrypt(myfiledata)
     with open(e_path, "wb") as enc_file:
         enc_file.write(encrypted_data)
-
-        print("**********File is Encrypted**********")
-        print("")
-
-
-e_datapath()
+    enc_file.close()
+    print("**********File is Encrypted**********")
+    print("")
 
 
 def d_datapath():
@@ -103,32 +99,30 @@ def d_datapath():
 
     with open(d_path, "wb") as dec_file:
         dec_file.write(decrypted_data)
-
-        print("*********File is Decrypted***********")
-        print("")
-
-
-d_datapath()
-main_menu()
+    dec_file.close()
+    print("*********File is Decrypted***********")
+    print("")
 
 
-def e_message():
-    print("Input string for encryption:")
-    msg_input = input("Message for encryption:").encode()
-    print(str(msg_input.decode('utf-8')))
-    enc_str = fclass.encrypt(msg_input)
-    print("*****Message is Encrypted*************")
+# def e_message():
+ #   print("Input string for encryption:")
+  #  msg_input = input("Message for encryption:").encode()
+   # print(str(msg_input.decode('utf-8')))
+    #enc_str = fclass.encrypt(msg_input)
+    #print("*****Message is Encrypted*************")
 
 
-def d_message():
-    print("Input string for decryption:")
-    msg_input = input("Message for decryption:").decode()
-    print(str(msg_input.decode('utf-8')))
-    enc_str = fclass.encrypt(msg_input)
-    print(enc_str.decode("utf-8"))
-    print("***********Message is Decrypted**********")
+# def d_message():
+    #print("Input string for decryption:")
+    #msg_input = input("Message for decryption:").decode()
+    # print(str(msg_input.decode('utf-8')))
+    #enc_str = fclass.encrypt(msg_input)
+    # print(enc_str.decode("utf-8"))
+    #print("***********Message is Decrypted**********")
 
 
 ##########################################################
+
 main_menu()
+
 # End
