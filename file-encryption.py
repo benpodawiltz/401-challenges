@@ -2,20 +2,19 @@
 #
 # script name:  File_Encryption
 # author:       ben_podawiltz
-# revision:     7.12.21
+# revision:     7.14.21
 #
 ######################################
 #
 # Purpose:
 # Create a script that utilizes the cryptography library to:
-# Prompt the user to select a mode:
 # 1. Encrypt a file (mode 1)
 # 2. Decrypt a file (mode 2)
 # 3. Encrypt a message (mode 3)
 # 4. Decrypt a message (mode 4)
 # If mode 1 or 2 are selected, prompt the user to provide a filepath to a target file.
 # If mode 3 or 4 are selected, prompt the user to provide a cleartext string.
-# Depending on the selection, perform one of the below functions.
+#
 # You’ll need to create four functions:
 # 1. Encrypt the target file if in mode 1.
 # 2. Delete the existing target file and replace it entirely with the encrypted version.
@@ -28,9 +27,11 @@
 #
 ######################################
 #
-# Variables:
+# Libraries:
 
 from cryptography.fernet import Fernet
+
+# Functions:
 
 
 def main_menu():
@@ -50,6 +51,8 @@ def main_menu():
         e_message()
     elif user_input == "4":
         d_message()
+    elif user_input == "5":
+        exit
     else:
         print("Error, make another selection")
 
@@ -78,7 +81,7 @@ fclass = Fernet(key)
 def e_datapath():
     print("Please provide path-to-file for target encryption:")
     e_path = input("Target file for encryption:")
-
+    # opens, reads contents of file then writes encrypted file to it
     with open(e_path, "rb") as e_file:
         myfiledata = e_file.read()
     encrypted_data = fclass.encrypt(myfiledata)
@@ -87,12 +90,13 @@ def e_datapath():
     enc_file.close()
     print("**********File is Encrypted**********")
     print("")
+    main_menu()
 
 
 def d_datapath():
     print("Please provide path-to-file for target decryption:")
     d_path = input("Target file for decryption:")
-
+    # opens, reads encrypted data in file then decrypts and writes to file
     with open(d_path, "rb") as d_file:
         enc_datafile = d_file.read()
         decrypted_data = fclass.decrypt(enc_datafile)
@@ -102,27 +106,38 @@ def d_datapath():
     dec_file.close()
     print("*********File is Decrypted***********")
     print("")
+    main_menu()
 
 
-# def e_message():
- #   print("Input string for encryption:")
-  #  msg_input = input("Message for encryption:").encode()
-   # print(str(msg_input.decode('utf-8')))
-    #enc_str = fclass.encrypt(msg_input)
-    #print("*****Message is Encrypted*************")
+def e_message():
+    msg_input = input("Input Message for encryption:")
+    # encodes input message then prints to stndout
+    enc_str = msg_input.encode()
+    encrypted = fclass.encrypt(enc_str)
+    print("*****Message is Encrypted*************")
+    print(encrypted)
+    main_menu()
 
 
-# def d_message():
-    #print("Input string for decryption:")
-    #msg_input = input("Message for decryption:").decode()
-    # print(str(msg_input.decode('utf-8')))
-    #enc_str = fclass.encrypt(msg_input)
-    # print(enc_str.decode("utf-8"))
-    #print("***********Message is Decrypted**********")
+def d_message():
+    msg_input = input("Input String for decryption:")
+    # decrypts ciphertext and prints cleartext to stndout
+    d_str = str.encode(msg_input)
+    decrypted = fclass.decrypt(d_str)
+    print("***********Message is Decrypted**********")
+    print(decrypted)
+    main_menu()
+
+
+##########################################################
+# Call functions:
+main_menu()
 
 
 ##########################################################
 
-main_menu()
-
+# Sources: https://www.thepythoncode.com/article/encrypt-decrypt-files-symmetric-python
+# https://www.geeksforgeeks.org/how-to-encrypt-and-decrypt-strings-in-python/
+# https://stackoverflow.com/questions/28583565/str-object-has-no-attribute-decode-python-3-error
+#
 # End
