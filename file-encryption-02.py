@@ -145,36 +145,43 @@ def d_message():
 
 def e_folder():
     user_dir = input("Enter path-to-folder for encryption:")
-    for filenames in os.listdir(user_dir):
-        # iterate over files
-        for filename in filenames:
-            print("File:", os.path.join(filename))
-
-        contents = os.path.join(user_dir, filenames)
+    # for filename in os.listdir(user_dir):
+    for root, dirs, files in os.walk(user_dir):
+        # For each hit, concatenate the current directory pathing to left of result
+        for name in files:
+            print(os.path.join(root, name))
+        for name in dirs:
+            print(os.path.join(root, name))
+        contents = os.path.join(user_dir)
         with open(contents, "rb") as file:
             openfile = file.read()
             e_file = fclass.encrypt(openfile)
         with open(contents, "wb") as file:
             file.write(e_file)
             print(e_file)
+            print("********Folder Encrypted***********")
             main_menu()
 
 
 def d_folder():
     user_dir = input("Enter path-to-folder for decryption:")
-    for filenames in os.listdir(user_dir):
-        # iterate over files
-        for filename in filenames:
-            print("File:", os.path.join(filename))
-
-        contents = os.path.join(user_dir, filenames)
+    for root, dirs, files in os.walk(user_dir):
+        # For each hit, concatenate the current directory pathing to left of result
+        for name in files:
+            print(os.path.join(files, name))
+        for name in dirs:
+            # for filename in os.listdir(user_dir):
+            print(os.path.join(files, name))
+        contents = os.path.join(user_dir)
         with open(contents, "rb") as file:
             openfile = file.read()
             d_file = fclass.decrypt(openfile)
         with open(contents, "wb") as file:
             file.write(d_file)
             print(d_file)
-            main_menu()
+        main_menu()
+
+
 #########################################################
 # Call functions:
 
