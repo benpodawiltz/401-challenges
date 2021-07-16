@@ -148,17 +148,15 @@ def e_folder():
     for root, dirs, files in os.walk(user_dir):
         for file in files:
             filename = os.path.join(root, file)
-            encrypted = fclass.encrypt(filename)
             print(filename)
-            print(os.path.join(root, file))
-            main_menu()
-       # with open(file, 'rb') as og_file:
-           # og = og_file.read()
-
-        # with open(file, 'wb') as e_file:
-            # e_file.write(encrypted)
-            #print("\n********Folder Encrypted***********")
-            # main_menu()
+            with open(filename, 'rb') as og_file:
+                og = og_file.read()
+                encrypted = fclass.encrypt(og)
+            with open(filename, 'wb') as e_file:
+                e_file.write(encrypted)
+                print(filename, "was encrypted")
+    print("\n********Folder Encrypted***********")
+    main_menu()
 
 
 def d_folder():
@@ -166,16 +164,16 @@ def d_folder():
     for root, dirs, files in os.walk(user_dir):
         for file in files:
             print(os.path.join(root, file))
-        filename = os.path.join(root, file)
-        with open(filename, 'rb') as og_file:
-            og = og_file.read()
-
-        decrypted = fclass.decrypt(og)
-    with open(filename, 'wb') as d_file:
-        d_file.write(decrypted)
-        d_file.close()
-        print('\n**********Folder Decrypted****************')
-        main_menu()
+            filename = os.path.join(root, file)
+            with open(filename, 'rb') as og_file:
+                og = og_file.read()
+                decrypted = fclass.decrypt(og)
+            with open(filename, 'wb') as d_file:
+                d_file.write(decrypted)
+                print(filename, "was encrypted")
+                d_file.close()
+    print('\n**********Folder Decrypted****************')
+    main_menu()
 
 
 #########################################################
