@@ -145,40 +145,36 @@ def d_message():
 
 def e_folder():
     user_dir = input("Enter path-to-folder for encryption:")
-    # for filename in os.listdir(user_dir):
     for root, dirs, files in os.walk(user_dir):
-        # For each hit, concatenate the current directory pathing to left of result
-        for name in files:
-            print(os.path.join(root, name))
-        for name in dirs:
-            print(os.path.join(root, name))
-        contents = os.path.join(user_dir)
-        with open(contents, "rb") as file:
-            openfile = file.read()
-            e_file = fclass.encrypt(openfile)
-        with open(contents, "wb") as file:
-            file.write(e_file)
-            print(e_file)
-            print("********Folder Encrypted***********")
+        for file in files:
+            filename = os.path.join(root, file)
+            encrypted = fclass.encrypt(filename)
+            print(filename)
+            print(os.path.join(root, file))
             main_menu()
+       # with open(file, 'rb') as og_file:
+           # og = og_file.read()
+
+        # with open(file, 'wb') as e_file:
+            # e_file.write(encrypted)
+            #print("\n********Folder Encrypted***********")
+            # main_menu()
 
 
 def d_folder():
     user_dir = input("Enter path-to-folder for decryption:")
     for root, dirs, files in os.walk(user_dir):
-        # For each hit, concatenate the current directory pathing to left of result
-        for name in files:
-            print(os.path.join(files, name))
-        for name in dirs:
-            # for filename in os.listdir(user_dir):
-            print(os.path.join(files, name))
-        contents = os.path.join(user_dir)
-        with open(contents, "rb") as file:
-            openfile = file.read()
-            d_file = fclass.decrypt(openfile)
-        with open(contents, "wb") as file:
-            file.write(d_file)
-            print(d_file)
+        for file in files:
+            print(os.path.join(root, file))
+        filename = os.path.join(root, file)
+        with open(filename, 'rb') as og_file:
+            og = og_file.read()
+
+        decrypted = fclass.decrypt(og)
+    with open(filename, 'wb') as d_file:
+        d_file.write(decrypted)
+        d_file.close()
+        print('\n**********Folder Decrypted****************')
         main_menu()
 
 
@@ -194,5 +190,5 @@ main_menu()
 # Sources: https://www.thepythoncode.com/article/encrypt-decrypt-files-symmetric-python
 # https://www.geeksforgeeks.org/how-to-encrypt-and-decrypt-strings-in-python/
 # https://stackoverflow.com/questions/28583565/str-object-has-no-attribute-decode-python-3-error
-#
+# https://medium.com/@abhishake21/encrypt-and-decrypt-files-and-folder-with-a-password-and-salt-of-your-choice-using-python-7101840b2753
 # End
