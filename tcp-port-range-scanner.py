@@ -67,7 +67,7 @@ for dst_port in port_range_scan:
 # https://santanderglobaltech.com/en/guide-using-scapy-with-python/
 #
 #
-#NULL = 0x00
+# NULL = 0x00
 # END = 0x01
 # SYN = 0x02
 # RST = 0x04
@@ -78,13 +78,16 @@ for dst_port in port_range_scan:
 # PSH + ACK = 0x18
 #
 #
+# 
+# Adding user input range: 
+# https://stackoverflow.com/questions/19821273/limiting-user-input-to-a-range-in-python
+#
+# Scapy Cheat sheet:
+# https://wiki.sans.blue/Tools/pdfs/ScapyCheatSheet_v0.2.pdf
 #
 #
-#
-#
-#
-#
-#
+# Comment: I wwould like to come back and add user functionality to it. Prompt user for dest IP, port range, etc
+# 
 #
 #
 # End
