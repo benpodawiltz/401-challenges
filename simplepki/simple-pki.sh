@@ -153,4 +153,9 @@ openssl pkcs12 \
 
 echo "End of script"
 
+
+###################
+#
+# Source: https://pki-tutorial.readthedocs.io/en/latest/simple/
+#
 # End
