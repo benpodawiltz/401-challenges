@@ -11,6 +11,7 @@
 # Libraries
 import random
 from typing import List
+import scapy 
 from scapy.all import *
 from ipaddress import IPv4Network
 

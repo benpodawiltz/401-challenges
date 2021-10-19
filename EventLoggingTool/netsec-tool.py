@@ -34,6 +34,7 @@
 # Libraries
 import sys
 import logging
+import scapy 
 from scapy.all import *
 import ipaddress
 ##########################################

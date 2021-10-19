@@ -7,8 +7,6 @@
 ######################################
 #
 # 
-######################################
-#
 # Libraries:
 
 from cryptography.fernet import Fernet
@@ -16,8 +14,31 @@ from cryptography.fernet import Fernet
 import os
 import logging
 
-# Functions:
 
+######################################
+# Logging:
+logger = logging.getLogger(__name__)
+
+# Create handlers
+c_handler = logging.StreamHandler()
+f_handler = logging.FileHandler('file.log')
+c_handler.setLevel(logging.WARNING)
+f_handler.setLevel(logging.ERROR)
+
+# Create formatters and add it to handlers
+c_format = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+c_handler.setFormatter(c_format)
+f_handler.setFormatter(f_format)
+
+# Add handlers to the logger
+logger.addHandler(c_handler)
+logger.addHandler(f_handler)
+
+logger.warning('This is a warning')
+logger.error('This is an error')
+
+# Functions:
 
 def main_menu():
     print("[1.] Encrypt a file")
@@ -57,9 +78,8 @@ def save_key():
     key = Fernet.generate_key()
     with open("key.key", "wb") as key_file:
         key_file.write(key)
-        if key == 1:
-                logging.warning("Key already Present!")
-
+       
+                
 def load_key():
     return open("key.key", "rb").read()
 
@@ -155,11 +175,6 @@ def d_folder():
 
 
 
-logging.basicConfig(filename="logfile.txt", level=logging.INFO, filemode='w', format='%(asctime)s:%(levelname)s:%(message)s)', datefmt='%d/%m/%Y %I:%M:%S %p')
-logging.error("Whoa nelly, we got a problem!")
-logging.debug("This is a bug!")
-logging.warning("This is a warning!")
-logging.critical("You're screwed!")
 #########################################################
 # Call functions:
 
