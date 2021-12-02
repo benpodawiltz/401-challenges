@@ -30,14 +30,16 @@ def port_scan(host):
         print("Error: ", socketerror)
 
 def os_version():
+        ports=input("Input port range [1-1024]: ")
         print("Nmap Version: ", nm.nmap_version())
-        nm.scan(host, '1-1024', '-v -O -sS')     
+        nm.scan(host, ports, '-O -sU')
         print(nm.scaninfo())
         print("Ip Status: ", nm[host].state())
-        print("protocols:",nm[host].all_protocols())
-        print("Open Ports: ", nm[host]['tcp'].keys())
+        print("Protocols:", nm[host].all_protocols())
+        print("Open Ports: ", nm[host]['udp'].keys())
         print("*" * 25)
         print("")
+
 
 def bannergrab(host):
         port = input("Please enter port number to scan:  ")
